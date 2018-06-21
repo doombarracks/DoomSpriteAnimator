@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Doom / Heretic / Hexen / Strife Sprite Generator</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Sprite animator for Doom, Heretic, Hexen, and Strife.">
+	<meta name="keywords" content="Sprite,Sprite Sheet,Animation,FPS,Shooting,Game,Doom,Heretic,Hexen,Strife,C#,CSS,HTML">
+	<meta name="author" content="Howie Hsu">
+	<style>
+	body {
+		background-color: #222;
+		color: #ddd;
+		font-family: sans-serif;
+		line-height: 150%;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		color: #eee;
+	}
+	hr { margin-top: 3em; }
+	a:link, a:visited, a:hover, a:active { color: cyan; }
+	span {
+		color: white;
+		font-weight: bold;
+	}
+	step {
+		text-decoration: underline;
+		font-weight: bold;
+		font-size: 1.1em;
+	}
+	table tr:nth-child(odd) {
+		background-color: #333;
+	}
+	table td:first-child {
+		color: #eee;
+		font-weight: bold;
+		border-right: 1px solid #444;
+	}
+	table td {
+		padding: 0.5em;
+	}
+	ul {
+		display: inline-block;
+		text-align: left;
+	}
+	footer {
+		margin-top: 2em;
+		text-align: right;
+		font-style: italic;
+	}
+
+	.SAni_Doom_BaronOfHell {
+		width: 76px;
+		height: 76px;
+		background: url('Instruction/Doom_BaronOfHell.png');
+		animation: SKF_Doom_BaronOfHell 4.114s step-end infinite;
+	}
+	@keyframes SKF_Doom_BaronOfHell {
+		0.00% { background-position: 0px 0px }
+		4.17% { background-position: 0px -76px }
+		8.33% { background-position: 0px -152px }
+		12.50% { background-position: 0px -228px }
+		16.67% { background-position: 0px 0px }
+		20.83% { background-position: 0px -76px }
+		25.00% { background-position: 0px -152px }
+		29.17% { background-position: 0px -228px }
+		33.33% { background-position: 0px 0px }
+		37.50% { background-position: 0px -76px }
+		41.67% { background-position: 0px -152px }
+		45.83% { background-position: 0px -228px }
+		50.00% { background-position: 0px 0px }
+		54.17% { background-position: 0px -76px }
+		58.33% { background-position: 0px -152px }
+		62.50% { background-position: 0px -228px }
+		66.67% { background-position: 0px 0px }
+		70.83% { background-position: 0px -76px }
+		75.00% { background-position: 0px -152px }
+		79.17% { background-position: 0px -228px }
+		83.33% { background-position: 0px -304px }
+		88.89% { background-position: 0px -380px }
+		94.44% { background-position: 0px -456px }
+	}
+	</style>
+</head>
+<body>
+	<center>
+		<h1>Sprite Animator for Doom, Heretic, Hexen, and Strife</h1>
+
+		<hr>
+		<section>
+			<h2>Introduction</h2>
+			<p>This tool converts sprites from a <a href="https://doomwiki.org/wiki/WAD">WAD</a> to a sprite sheet...</p>
+			<img src="Instruction/Doom_BOSS.png">
+			<p>an animated CSS...</p>
+			<div class="SAni_Doom_BaronOfHell"></div>
+			<p>or an animated GIF...</p>
+			<img src="Instruction/Doom_BaronOfHell.gif">
+			<p>in respect of sprite offset and required size to fit every individual sprite.</p>
+		</section>
+
+		<hr>
+		<section>
+			<h2>Usage Instruction</h2>
+			<p>There is an <span>"Example"</span> folder which contains all necessary elements to start your first attempt at making your own sprite sheet / animation.</p>
+			<p>
+				<step>Step 1:</step> Open the WAD you want to export sprites in <a href="http://slade.mancubus.net/">Slade</a>.<br>
+				(WAD files are limited to DOOM2.wad, TNT.wad or Plutonia.wad in this example.)
+			</p>
+			<p><step>Step 2:</step> Export all sprites as PNGs to <span>"Example/Graphics/Doom/"</span>.</p>
+			<img src="Instruction/Usage_1.png">
+			<p><step>Step 3:</step> Some of the lumps in WAD contains invalid characters for making a path, so they are exported in different names.</p>
+			<img src="Instruction/Usage_2.png">
+			<p>
+				<step>Step 4:</step> Run batch file <span>"Example/Graphics/Renamer_Doom.bat"</span> to correct victim files.<br>
+				(You might need to create your own way of renaming other files for other games.)
+			</p>
+			<p><step>Step 5:</step> Drop <span>"Example/Doom_Definition.json"</span> to <span>"Example/SpriteGenerator.exe"</span></p>
+			<p><step>Step 6:</step> After the application ends, there is a new folder <span>"Example/Export_Doom/"</span> created with everything inside.</p>
+			<p>Tadaaaaaaaah!</p>
+			<img src="Instruction/Usage_3.png">
+			<img src="Instruction/Usage_4.png">
+		</section>
+
+		<hr>
+		<section>
+			<h2>Who Are Getting Exported?</h2>
+			<p>All files are exported to <span>Example/Export_Doom/</span>.</p>
+			<table cellspacing="0">
+				<tr>
+					<td>Full/</td>
+					<td>"Full" means all PNGs in the folder "PngDirectory" are loaded and categorized by sprite name. ("BOSS", "CYBR", "SPID", etc.)</td>
+				</tr>
+				<tr>
+					<td>Full/SpriteSheet/</td>
+					<td>All sprite sheets.</td>
+				</tr>
+				<tr>
+					<td>Full/_DoomFullSpriteSheet.json</td>
+					<td>Contains information about every sprite from file name of the sprite sheet, size of each sprite, and frame name with rotation, which is useful if you want to make your own animation based on the sprite sheet exported.</td>
+				</tr>
+				<tr>
+					<td>ActorStates/</td>
+					<td>"ActorStates" means only PNGs in the folder "PngDirectory" referenced by "ActorStates" in definition JSON file will be loaded. (Not all files.)</td>
+				</tr>
+				<tr>
+					<td>ActorStates/SpriteSheet/</td>
+					<td>All sprite sheets.</td>
+				</tr>
+				<tr>
+					<td>
+						ActorStates/SpriteSheet/_DoomAnimation.css<br>
+						ActorStates/SpriteSheet/_DoomAnimation.html
+					</td>
+					<td>All animated sprites by CSS and an HTML to view the result.</td>
+				</tr>
+				<tr>
+					<td>ActorStates/_DoomFullSpriteSheet.json</td>
+					<td>Contains information about every sprite from file name of the sprite sheet, size of each sprite, and frame name <div style="display:inline-block;text-decoration:line-through">with rotation</div> (shouldn't be practical in this case), which is useful if you want to make your own animation based on the sprite sheet exported.</td>
+				</tr>
+				<tr>
+					<td>ActorStates/AnimatedGIF/</td>
+					<td>All animated GIFs.</td>
+				</tr>
+			</table>
+		</section>
+
+		<hr>
+		<section>
+			<h2>For More Information About How to Make My Own Animations</h2>
+			<p>Please open definition JSON file <span>"Example/Doom_Definition.json"</span> in a text editor.</p>
+		</section>
+
+		<hr>
+		<section>
+			<h2>Where to Get This</h2>
+			<p><a href="https://github.com/doombarracks/DoomSpriteAnimator/">GitHub</a>. Absolutely.</p>
+		</section>
+
+		<hr>
+		<section>
+			<h2>Possible Known Issues</h2>
+			<ul>
+				<li>Never tested on sprites with different colormaps to one sprite sheet or GIF.</li>
+				<li>Never tested on sprites outside 8-bit-indexed PNG images.</li>
+				<li>Do not use absolute paths in definition JSON file since it is designed to work on relative paths.</li>
+			</ul>
+		</section>
+
+		<hr>
+		<section>
+			<h2>Credit</h2>
+			<p><a href="https://github.com/mrousavy/AnimatedGif">AnimatedGif</a> library for creating animated GIF.</p>
+		</section>
+	</center>
+
+	<footer>Written by Howie Hsu on Thursday, June 21, 2018</footer>
+</body>
+</html>
