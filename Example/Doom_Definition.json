@@ -23,6 +23,8 @@
     },
     "BOSS": {
       "ExportName": "BaronOfHell",
+	  "Rotations": "218",
+	  "OffsetAlignSharesAllRotations": true,
       "States": [
         "ABCDABCDABCDABCDABCD 6",
         "EFG 8"
@@ -105,7 +107,7 @@
       ]
     },
     "POSS": {
-      "ExportName": "ZombieMan",
+      "ExportName": "Zombieman",
       "States": [
         "ABCDABCDABCDABCDABCD 8",
         "E 10",
@@ -163,6 +165,407 @@
         "A 20",
         "GHGHGHGHGHG 4",
         "H 5"
+      ]
+    },
+    "BON2": {
+      "ExportName": "ArmorBonus",
+      "States": [
+        "ABCDCB 6"
+      ]
+    },
+    "ARM1": {
+      "ExportName": "GreenArmor",
+      "States": [
+        "A 6",
+		"B 7"
+      ]
+    },
+    "ARM2": {
+      "ExportName": "BlueArmor",
+      "States": [
+        "AB 6"
+      ]
+    },
+    "PINV": {
+      "ExportName": "InvulnerabilitySphere",
+      "States": [
+        "ABCD 6"
+      ]
+    },
+    "SOUL": {
+      "ExportName": "Soulsphere",
+      "States": [
+        "ABCDCB 6"
+      ]
+    },
+    "MEGA": {
+      "ExportName": "Megasphere",
+      "States": [
+        "ABCD 6"
+      ]
+    },
+    "PINS": {
+      "ExportName": "BlurSphere",
+      "States": [
+        "ABCD 6"
+      ]
+    },
+    "SUIT": {
+      "ExportName": "RadiationSuit",
+      "States": [
+        "A 35"
+      ]
+    },
+    "PVIS": {
+      "ExportName": "Infrared",
+      "States": [
+        "AB 6"
+      ]
+    },
+    "PMAP": {
+      "ExportName": "AllMap",
+      "States": [
+        "ABCDCB 6"
+      ]
+    },
+    "PSTR": {
+      "ExportName": "Berserk",
+      "States": [
+        "A 35"
+      ]
+    },
+    "TLMP": {
+      "ExportName": "TechLamp",
+      "States": [
+        "ABCD 4"
+      ]
+    },
+    "TLP2": {
+      "ExportName": "TechLamp2",
+      "States": [
+        "ABCD 4"
+      ]
+    },
+    "COLU": {
+      "ExportName": "Column",
+      "States": [
+        "A 35"
+      ]
+    },
+    "COL1": {
+      "ExportName": "TallGreenColumn",
+      "States": [
+        "A 35"
+      ]
+    },
+    "COL2": {
+      "ExportName": "ShortGreenColumn",
+      "States": [
+        "A 35"
+      ]
+    },
+    "COL3": {
+      "ExportName": "TallRedColumn",
+      "States": [
+        "A 35"
+      ]
+    },
+    "COL4": {
+      "ExportName": "ShortRedColumn",
+      "States": [
+        "A 35"
+      ]
+    },
+    "COL6": {
+      "ExportName": "SkullColumn",
+      "States": [
+        "A 35"
+      ]
+    },
+    "COL5": {
+      "ExportName": "HeartColumn",
+      "States": [
+        "AB 14"
+      ]
+    },
+    "CEYE": {
+      "ExportName": "EvilEye",
+      "States": [
+        "ABCB 6"
+      ]
+    },
+    "FSKU": {
+      "ExportName": "FloatingSkull",
+      "States": [
+        "ABC 6"
+      ]
+    },
+    "TRE1": {
+      "ExportName": "TorchTree",
+      "States": [
+        "A 35"
+      ]
+    },
+    "TBLU": {
+      "ExportName": "BlueTorch",
+      "States": [
+        "ABCD 4"
+      ]
+    },
+    "TGRN": {
+      "ExportName": "GreenTorch",
+      "States": [
+        "ABCD 4"
+      ]
+    },
+    "TRED": {
+      "ExportName": "RedTorch",
+      "States": [
+        "ABCD 4"
+      ]
+    },
+    "SMBT": {
+      "ExportName": "ShortBlueTorch",
+      "States": [
+        "ABCD 4"
+      ]
+    },
+    "SMGT": {
+      "ExportName": "ShortGreenTorch",
+      "States": [
+        "ABCD 4"
+      ]
+    },
+    "SMRT": {
+      "ExportName": "ShortRedTorch",
+      "States": [
+        "ABCD 4"
+      ]
+    },
+    "SMIT": {
+      "ExportName": "Stalagtite",
+      "States": [
+        "A 35"
+      ]
+    },
+    "ELEC": {
+      "ExportName": "TechPillar",
+      "States": [
+        "A 35"
+      ]
+    },
+    "CAND": {
+      "ExportName": "CandleStick",
+      "States": [
+        "A 35"
+      ]
+    },
+    "CBRA": {
+      "ExportName": "Candelabra",
+      "States": [
+        "A 35"
+      ]
+    },
+    "GOR1": {
+      "ExportName": "BloodyTwitch",
+      "States": [
+        "A 10",
+		"B 15",
+		"C 8",
+		"B 6"
+      ]
+    },
+    "GOR2": {
+      "ExportName": "Meat2",
+      "States": [
+        "A 35"
+      ]
+    },
+    "GOR3": {
+      "ExportName": "Meat3",
+      "States": [
+        "A 35"
+      ]
+    },
+    "GOR4": {
+      "ExportName": "Meat4",
+      "States": [
+        "A 35"
+      ]
+    },
+    "GOR5": {
+      "ExportName": "Meat5",
+      "States": [
+        "A 35"
+      ]
+    },
+    "POL4": {
+      "ExportName": "HeadOnAStick",
+      "States": [
+        "A 35"
+      ]
+    },
+    "POL2": {
+      "ExportName": "HeadsOnAStick",
+      "States": [
+        "A 35"
+      ]
+    },
+    "POL3": {
+      "ExportName": "HeadCandles",
+      "States": [
+        "AB 6"
+      ]
+    },
+    "POL1": {
+      "ExportName": "DeadStick",
+      "States": [
+        "A 35"
+      ]
+    },
+    "POL6": {
+      "ExportName": "LiveStick",
+      "States": [
+        "A 6",
+		"B 8"
+      ]
+    },
+    "TRE2": {
+      "ExportName": "BigTree",
+      "States": [
+        "A 35"
+      ]
+    },
+    "FCAN": {
+      "ExportName": "BurningBarrel",
+      "States": [
+        "ABC 4"
+      ]
+    },
+    "HDB1": {
+      "ExportName": "HangNoGuts",
+      "States": [
+        "A 35"
+      ]
+    },
+    "HDB2": {
+      "ExportName": "HangBNoBrain",
+      "States": [
+        "A 35"
+      ]
+    },
+    "HDB3": {
+      "ExportName": "HangTLookingDown",
+      "States": [
+        "A 35"
+      ]
+    },
+    "HDB5": {
+      "ExportName": "HangTLookingUp",
+      "States": [
+        "A 35"
+      ]
+    },
+    "HDB4": {
+      "ExportName": "HangTSkull",
+      "States": [
+        "A 35"
+      ]
+    },
+    "HDB6": {
+      "ExportName": "HangTNoBrain",
+      "States": [
+        "A 35"
+      ]
+    },
+    "POB1": {
+      "ExportName": "ColonGibs",
+      "States": [
+        "A 35"
+      ]
+    },
+    "POB2": {
+      "ExportName": "SmallBloodPool",
+      "States": [
+        "A 35"
+      ]
+    },
+    "BRS1": {
+      "ExportName": "BrainStem",
+      "States": [
+        "A 35"
+      ]
+    },
+    "SMT2": {
+      "ExportName": "Stalagmite",
+      "States": [
+        "A 35"
+      ]
+    },
+    "BON1": {
+      "ExportName": "HealthBonus",
+      "States": [
+        "ABCDCB 6"
+      ]
+    },
+    "STIM": {
+      "ExportName": "Stimpack",
+      "States": [
+        "A 35"
+      ]
+    },
+    "MEDI": {
+      "ExportName": "Medikit",
+      "States": [
+        "A 35"
+      ]
+    },
+    "BKEY": {
+      "ExportName": "BlueCard",
+      "States": [
+        "AB 10"
+      ]
+    },
+    "YKEY": {
+      "ExportName": "YellowCard",
+      "States": [
+        "AB 10"
+      ]
+    },
+    "RKEY": {
+      "ExportName": "RedCard",
+      "States": [
+        "AB 10"
+      ]
+    },
+    "BSKU": {
+      "ExportName": "BlueSkull",
+      "States": [
+        "AB 10"
+      ]
+    },
+    "YSKU": {
+      "ExportName": "YellowSkull",
+      "States": [
+        "AB 10"
+      ]
+    },
+    "RSKU": {
+      "ExportName": "RedSkull",
+      "States": [
+        "AB 10"
+      ]
+    },
+    "BAR1": {
+      "ExportName": "ExplosiveBarrel",
+      "States": [
+        "AB 6"
+      ]
+    },
+    "PUFF": {
+      "ExportName": "BulletPuff",
+      "States": [
+        "ABCD 4"
       ]
     }
   },

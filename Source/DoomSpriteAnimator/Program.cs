@@ -149,17 +149,25 @@ namespace SpriteGenerator
                 Dictionary<string, string> exportNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                 foreach (var kvp in pd.ActorStates)
                 {
-                    string n = kvp.Value.ExportName;
-                    if (string.IsNullOrEmpty(n)) continue;
-
-                    if (!exportNames.ContainsKey(n))
+                    // Check rotations.
+                    if (string.IsNullOrEmpty(kvp.Value.Rotations))
                     {
-                        exportNames.Add(kvp.Key, n);
+                        kvp.Value.Rotations = "1"; // Basic rotation by default if no rotation is defined.
                     }
-                    else
+
+                    // Check export name.
+                    string n = kvp.Value.ExportName;
+                    if (!string.IsNullOrEmpty(n))
                     {
-                        Warning("Export name conflict (\"{0}\"). Will be removed to prevent errors.", n);
-                        kvp.Value.ExportName = null;
+                        if (!exportNames.ContainsKey(n))
+                        {
+                            exportNames.Add(kvp.Key, n);
+                        }
+                        else
+                        {
+                            Warning("Export name conflict (\"{0}\"). Will be removed to prevent errors.", n);
+                            kvp.Value.ExportName = null;
+                        }
                     }
                 }
 
@@ -182,7 +190,7 @@ namespace SpriteGenerator
         {
             CreateDirectoryIfNotExist(exportBaseDirectory);
 
-            Dictionary<string, SpriteCollection> spriteCollection = GetSpriteCollection(pngList);
+            Dictionary<string, SpriteCollection> spriteCollection = GetSpriteCollection(actorStates, pngList);
 
             if (exportSpriteSheet)
             {
@@ -194,37 +202,31 @@ namespace SpriteGenerator
                     namePrefix);
             }
 
-            bool hasSpriteSheetJSON = !string.IsNullOrEmpty(spriteSheetJSONPath),
-                hasCSS = !string.IsNullOrEmpty(cssPath);
-            if (hasSpriteSheetJSON || hasCSS)
+            if (!string.IsNullOrEmpty(spriteSheetJSONPath))
             {
+                Print("Exporting sprite sheet JSON...");
                 Dictionary<string, SpriteSheetJSON> spriteSheetJSON = GetSpriteSheetJSON(spriteCollection, exportName, namePrefix);
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                File.WriteAllText(
+                    MergePath(exportBaseDirectory, spriteSheetJSONPath),
+                    js.Serialize(spriteSheetJSON));
+            }
 
-                if (hasSpriteSheetJSON)
-                {
-                    Print("Exporting sprite sheet JSON...");
-                    JavaScriptSerializer js = new JavaScriptSerializer();
-                    File.WriteAllText(
-                        MergePath(exportBaseDirectory, spriteSheetJSONPath),
-                        js.Serialize(spriteSheetJSON));
-                }
-
-                if (hasCSS)
-                {
-                    Print("Exporting animated CSS...");
-                    ExportAnimatedCSS(
-                        spriteSheetJSON,
-                        actorStates,
-                        exportName,
-                        MergePath(exportBaseDirectory, "SpriteSheet"), // So it can be referenced directly to all sprite sheets.
-                        namePrefix,
-                        cssPath);
-                }
+            if (!string.IsNullOrEmpty(cssPath))
+            {
+                Print("Exporting CSS animations...");
+                ExportAnimatedCSS(
+                    spriteCollection,
+                    actorStates,
+                    exportName,
+                    MergePath(exportBaseDirectory, "SpriteSheet"), // So it can be referenced directly to all sprite sheets.
+                    namePrefix,
+                    cssPath);
             }
 
             if (exportAnimatedGIF)
             {
-                Print("Exporting animated GIF...");
+                Print("Exporting animated GIFs...");
                 ExportAnimatedGIF(
                     spriteCollection,
                     actorStates,
@@ -246,40 +248,49 @@ namespace SpriteGenerator
             {
                 string name = kvp.Key;
                 List<ActorStatesJSON.State> states = kvp.Value.GetAllStates();
+                string rotations = kvp.Value.Rotations;
 
-                // Get all possible files with name prefix.
-                var files = pngPaths.Where((s) => Path.GetFileNameWithoutExtension(s).StartsWith(name, StringComparison.OrdinalIgnoreCase));
+                // Get all frame and rotations from file name.
+                Dictionary<string, string> fr2FileNameTable = new Dictionary<string, string>();
+                foreach (string fn in pngPaths)
+                {
+                    string lumpName = Path.GetFileNameWithoutExtension(fn);
+                    if (!lumpName.StartsWith(name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    switch (lumpName.Length)
+                    {
+                        case 6:
+                            fr2FileNameTable.Add(lumpName.Substring(4, 2), fn);
+                            break;
+                        case 8:
+                            fr2FileNameTable.Add(lumpName.Substring(4, 2), fn);
+                            fr2FileNameTable.Add(lumpName.Substring(6, 2), fn);
+                            break;
+                    }
+                }
+
+                // Since rotation "0" is the default rotation for all others not found, we should always find this one.
+                if (!rotations.Contains("0"))
+                {
+                    rotations = "0" + rotations;
+                }
+
+                // Get all associated files.
                 foreach (ActorStatesJSON.State state in states)
                 {
-                    // Find frame and best rotation (1 first, then 0).
-                    bool found = false;
-                    foreach (string file in files)
+                    foreach (char r in rotations)
                     {
-                        string f = Path.GetFileNameWithoutExtension(file).Substring(4);
-                        switch (f.Length)
+                        string fr = state.Frame + r.ToString();
+                        if (fr2FileNameTable.TryGetValue(fr, out string fn))
                         {
-                            case 2:
-                            case 4:
-                                char rotation;
-                                if (f.StartsWith(state.Frame))
-                                {
-                                    rotation = f[1];
-                                    found = rotation == '0' || rotation == '1';
-                                }
-                                if (!found && f.Length == 4 && f.Substring(2).StartsWith(state.Frame))
-                                {
-                                    rotation = f[3];
-                                    found = rotation == '0' || rotation == '1';
-                                }
-                                break;
-                        }
-                        if (found)
-                        {
-                            if (!fileList.Contains(file))
+                            if (!fileList.Contains(fn))
                             {
-                                fileList.Add(file);
+                                fileList.Add(fn);
                             }
-                            break;
+                            fr2FileNameTable.Remove(fr);
                         }
                     }
                 }
@@ -291,7 +302,7 @@ namespace SpriteGenerator
         /// <summary>
         /// Gets all sprite collections from specified pngs.
         /// </summary>
-        static Dictionary<string, SpriteCollection> GetSpriteCollection(string[] pngPaths)
+        static Dictionary<string, SpriteCollection> GetSpriteCollection(Dictionary<string, ActorStatesJSON> actorStates, string[] pngPaths)
         {
             Dictionary<string, SpriteCollection> spriteCollection = new Dictionary<string, SpriteCollection>(StringComparer.Ordinal);
 
@@ -330,14 +341,37 @@ namespace SpriteGenerator
                         }
                     }
 
+                    // Find which kind of rotation is specifried.
+                    bool addRotation1 = false, addRotation2 = false;
+                    if (actorStates == null)
+                    {
+                        addRotation1 = true;
+                        addRotation2 = fn.Length > 6;
+                    }
+                    else
+                    {
+                        ActorStatesJSON actorStatesJSON = actorStates[name];
+                        List<ActorStatesJSON.State> states = actorStatesJSON.GetAllStates();
+                        addRotation1 =
+                            states.Find((s) => s.Frame == fn[4].ToString()) != null
+                            && (actorStatesJSON.Rotations.Contains(fn[5]) || fn[5] == '0'); // Rotation "0" should always be added.
+                        addRotation2 =
+                            fn.Length > 6
+                            && states.Find((s) => s.Frame == fn[6].ToString()) != null
+                            && (actorStatesJSON.Rotations.Contains(fn[7]) || fn[7] == '0'); // Rotation "0" should always be added.
+                    }
+
                     // Load image.
                     Image img = Image.FromStream(new MemoryStream(bytes));
 
                     // Make the first sprite.
-                    sprites.AddSprite(new Sprite(name, fn.Substring(4, 1), fn.Substring(5, 1), img, new Rectangle(-x, -y, img.Width, img.Height)));
+                    if (addRotation1)
+                    {
+                        sprites.AddSprite(new Sprite(name, fn.Substring(4, 1), fn.Substring(5, 1), img, new Rectangle(-x, -y, img.Width, img.Height)));
+                    }
 
-                    // If the is a second sprite, make it.
-                    if (fn.Length > 6)
+                    // Make the second sprite with vertical mirroring.
+                    if (addRotation2)
                     {
                         Image img2 = (Image)img.Clone();
                         img2.RotateFlip(RotateFlipType.Rotate180FlipY);
@@ -454,8 +488,9 @@ namespace SpriteGenerator
                     json.Frames.Add(jsonFrame.ToString());
                 }
 
-                json.SpriteWidth = sprites.Region.Width;
-                json.SpriteHeight = sprites.Region.Height;
+                Rectangle region = sprites.Region;
+                json.SpriteWidth = region.Width;
+                json.SpriteHeight = region.Height;
                 spriteSheetJSON.Add(imgName, json);
             }
 
@@ -465,7 +500,7 @@ namespace SpriteGenerator
         /// <summary>
         /// Exports a CSS file with a testing HTML file to view the result of sprite animation by CSS3.
         /// </summary>
-        static void ExportAnimatedCSS(Dictionary<string, SpriteSheetJSON> spriteSheetJSON, Dictionary<string, ActorStatesJSON> actorStates, Dictionary<string, string> exportName, string baseDirectory, string namePrefix, string cssPath)
+        static void ExportAnimatedCSS(Dictionary<string, SpriteCollection> spriteCollection, Dictionary<string, ActorStatesJSON> actorStates, Dictionary<string, string> exportName, string baseDirectory, string namePrefix, string cssPath)
         {
             if (string.IsNullOrEmpty(cssPath))
             {
@@ -496,51 +531,63 @@ namespace SpriteGenerator
             foreach (var kvp in actorStates)
             {
                 string spriteName = kvp.Key;
-                string imgName = GetFileName(spriteName, exportName, namePrefix);
+                ActorStatesJSON statesJSON = kvp.Value;
 
                 // Cannot find sprite sheet definitions.
-                if (!spriteSheetJSON.TryGetValue(imgName, out SpriteSheetJSON ssj))
+                if (!spriteCollection.TryGetValue(spriteName, out SpriteCollection sc))
                 {
-                    Warning("Sprite sheet \"{0}\" not found in JSON and will be skipped.", imgName);
+                    Warning("Sprite sheet \"{0}\" not found in sprite collection and will be skipped.", spriteName);
                     continue;
                 }
 
-                string className = "SAni_" + imgName;
-                string kfName = "SKF_" + imgName;
-
                 // Get all states.
-                List<ActorStatesJSON.State> states = kvp.Value.GetAllStates();
+                List<ActorStatesJSON.State> states = statesJSON.GetAllStates();
 
                 // Total amount of duration.
                 double totalDuration = states.Sum(x => x.Duration);
+                
+                // Get rotations.
+                string rotations = !string.IsNullOrEmpty(statesJSON.Rotations)
+                    ? statesJSON.Rotations
+                    : "0"; // Set default rotation if not defined so we can proceed without problems.
 
-                // Generate class first.
-                css.AppendFormat(".{0} {{", className).AppendLine()
-                    .AppendFormat("\twidth: {0}px;", ssj.SpriteWidth).AppendLine()
-                    .AppendFormat("\theight: {0}px;", ssj.SpriteHeight).AppendLine()
-                    .AppendFormat("\tbackground: url('{0}.png');", imgName).AppendLine()
-                    .AppendFormat("\tanimation: {0} {1:0.000}s step-end infinite;", kfName, totalDuration / 35.0).AppendLine()
-                    .AppendLine("}");
+                // Get region.
+                Rectangle region = sc.Region;
 
-                // Generate key frames.
-                css.AppendFormat("@keyframes {0} {{", kfName).AppendLine();
-                int duration = 0;
-                foreach (var s in states)
+                // Process all rotations.
+                string imgBaseName = GetFileName(spriteName, exportName, namePrefix);
+                foreach (char rotation in statesJSON.Rotations)
                 {
-                    int fi = 0;
-                    foreach (string f in ssj.Frames)
-                    {
-                        if (f.StartsWith(s.Frame)) break; // Find index of frame.
-                        fi++;
-                    }
-                    int ri = 0; // Just take the first rotation.
-                    css.AppendFormat("\t{0:0.00}% {{ background-position: {1}px {2}px }}",
-                        duration / totalDuration * 100.0, -ri * ssj.SpriteWidth, -fi * ssj.SpriteHeight).AppendLine();
-                    duration += s.Duration;
-                }
-                css.AppendLine("}").AppendLine();
+                    string r = rotation.ToString();
+                    string imgName = r == "0"
+                        ? imgBaseName
+                        : string.Format("{0}{1}R{2}", imgBaseName, imgBaseName.EndsWith("_") ? "" : "_", r);
+                    string className = "SAni_" + imgName;
+                    string kfName = "SKF_" + imgName;
 
-                html.AppendLine("<div class=\"" + className + "\"></div>");
+                    // Generate class first.
+                    css.AppendFormat(".{0} {{", className).AppendLine()
+                        .AppendFormat("\twidth: {0}px;", region.Width).AppendLine()
+                        .AppendFormat("\theight: {0}px;", region.Height).AppendLine()
+                        .AppendFormat("\tbackground: url('{0}.png');", imgBaseName).AppendLine()
+                        .AppendFormat("\tanimation: {0} {1:0.000}s step-end infinite;", kfName, totalDuration / 35.0).AppendLine()
+                        .AppendLine("}");
+
+                    // Generate key frames.
+                    css.AppendFormat("@keyframes {0} {{", kfName).AppendLine();
+                    int duration = 0;
+                    foreach (var s in states)
+                    {
+                        int fi = Math.Max(0, sc.FindFrameIndex(s.Frame));
+                        int ri = sc.Frames[fi].FindRotationIndex(r);
+                        css.AppendFormat("\t{0:0.00}% {{ background-position: {1}px {2}px }}",
+                            duration / totalDuration * 100.0, -ri * region.Width, -fi * region.Height).AppendLine();
+                        duration += s.Duration;
+                    }
+                    css.AppendLine("}").AppendLine();
+
+                    html.AppendLine("<div class=\"" + className + "\"></div>");
+                }
             }
 
             // Export css file.
@@ -562,45 +609,55 @@ namespace SpriteGenerator
             foreach (var kvp in actorStates)
             {
                 string spriteName = kvp.Key;
-                string imgName = GetFileName(spriteName, exportName, namePrefix);
 
-                if (!spriteCollection.TryGetValue(spriteName, out SpriteCollection sprites))
+                if (!spriteCollection.TryGetValue(spriteName, out SpriteCollection sc))
                 {
-                    Warning("Sprite collection \"{0}\" not found and will be skipped.", imgName);
+                    Warning("Sprite collection \"{0}\" not found and will be skipped.", spriteName);
                     continue;
                 }
 
-                // Construct GIF image.
-                AnimatedGifCreator gif = AnimatedGif.AnimatedGif.Create(MergePath(baseDirectory, imgName + ".gif"), 1000 / 35);
-                Dictionary<Sprite, Bitmap> processedSprites = new Dictionary<Sprite, Bitmap>();
-
-                List<ActorStatesJSON.State> states = kvp.Value.GetAllStates();
-                Rectangle region = sprites.Region;
-                foreach (var state in states)
+                ActorStatesJSON statesJSON = kvp.Value;
+                string imgBaseName = GetFileName(spriteName, exportName, namePrefix);
+                foreach (char rotation in statesJSON.Rotations)
                 {
-                    int fi = 0;
-                    foreach (var f in sprites.Frames)
-                    {
-                        if (f.Frame == state.Frame) break;
-                        fi++;
-                    }
-                    int ri = 0; // Just take the first rotation.
+                    string r = rotation.ToString();
+                    string imgName = r == "0"
+                        ? imgBaseName
+                        : string.Format("{0}{1}R{2}", imgBaseName, imgBaseName.EndsWith("_") ? "" : "_", r);
 
-                    var s = sprites.Frames[fi].Sprites[ri];
-                    if (!processedSprites.TryGetValue(s, out Bitmap gifFrame))
+                    // Get all states.
+                    List<ActorStatesJSON.State> states = statesJSON.GetAllStates();
+
+                    // Extract sprite collection with only specified rotation.
+                    SpriteCollection scr = statesJSON.OffsetAlignSharesAllRotations ? sc : sc.ExtractRotation(r);
+                    Rectangle region = scr.Region;
+
+                    // Construct GIF image.
+                    AnimatedGifCreator gif = AnimatedGif.AnimatedGif.Create(MergePath(baseDirectory, imgName + ".gif"), 1000 / 35);
+                    Dictionary<Sprite, Bitmap> processedSprites = new Dictionary<Sprite, Bitmap>();
+
+                    // Push sprites to GIF.
+                    foreach (var state in states)
                     {
-                        gifFrame = new Bitmap(region.Width, region.Height, s.Image.PixelFormat);
-                        using (Graphics ggif = Graphics.FromImage(gifFrame))
+                        int fi = Math.Max(0, scr.FindFrameIndex(state.Frame));
+                        int ri = scr.Frames[fi].FindRotationIndex(r);
+
+                        Sprite s = scr.Frames[fi].Sprites[ri];
+                        if (!processedSprites.TryGetValue(s, out Bitmap gifFrame))
                         {
-                            ggif.DrawImage(s.Image, new Rectangle(s.Region.X - region.X, s.Region.Y - region.Y, s.Image.Width, s.Image.Height));
+                            gifFrame = new Bitmap(region.Width, region.Height, s.Image.PixelFormat);
+                            using (Graphics ggif = Graphics.FromImage(gifFrame))
+                            {
+                                ggif.DrawImage(s.Image, new Rectangle(s.Region.X - region.X, s.Region.Y - region.Y, s.Image.Width, s.Image.Height));
+                            }
+                            processedSprites.Add(s, gifFrame);
                         }
-                        processedSprites.Add(s, gifFrame);
+
+                        gif.AddFrame(gifFrame, (int)Math.Round(state.Duration * 1000.0 / 35.0), GifQuality.Bit8);
                     }
 
-                    gif.AddFrame(gifFrame, (int)Math.Round(state.Duration * 1000.0 / 35.0), GifQuality.Bit8);
+                    gif.Dispose();
                 }
-
-                gif.Dispose();
             }
         }
 
@@ -680,11 +737,15 @@ namespace SpriteGenerator
             {
                 get
                 {
-                    List<SpriteFrameContainer> f = frames.Values.ToList();
-                    f.Sort((x, y) => x.Frame.CompareTo(y.Frame));
-                    return f;
+                    if (sortedFrames == null)
+                    {
+                        sortedFrames = frames.Values.ToList();
+                        sortedFrames.Sort((x, y) => x.Frame.CompareTo(y.Frame));
+                    }
+                    return sortedFrames;
                 }
             }
+            List<SpriteFrameContainer> sortedFrames = null;
 
             public Rectangle Region
             {
@@ -731,8 +792,39 @@ namespace SpriteGenerator
                 {
                     f = new SpriteFrameContainer(sprite.Frame);
                     frames.Add(sprite.Frame, f);
+                    sortedFrames = null; // We need to recalculate.
                 }
                 f.AddSprite(sprite);
+            }
+
+            public int FindFrameIndex(string name)
+                => Frames.FindIndex((x) => x.Frame == name);
+
+            public SpriteCollection ExtractRotation(string rotation)
+            {
+                SpriteCollection sc = new SpriteCollection(Name);
+
+                foreach (var kvp in frames)
+                {
+                    List<Sprite> sprites = kvp.Value.Sprites;
+                    Sprite s = sprites.Find((x) => x.Rotation == rotation); // Find rotation.
+                    if (s == null && rotation != "0")
+                    {
+                        string find = rotation != "0"
+                            ? "0" // Use universal rotation if not found.
+                            : "1"; // If we already tried universal rotation, try the first rotation. (Front side.)
+                        s = sprites.Find((x) => x.Rotation == find);
+                    }
+
+                    if (s == null)
+                    {
+                        throw new Exception(string.Format("Not all frames in \"{0}\" have rotation \"{1}\".", Name, rotation));
+                    }
+
+                    sc.AddSprite(s);
+                }
+
+                return sc;
             }
         }
 
@@ -740,17 +832,24 @@ namespace SpriteGenerator
         {
             public string Frame { get; private set; }
 
+            /// <summary>
+            /// Key = rotation, Value = sprite.
+            /// </summary>
             Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>(StringComparer.Ordinal);
 
             public List<Sprite> Sprites
             {
                 get
                 {
-                    List<Sprite> s = sprites.Values.ToList();
-                    s.Sort((x, y) => x.Rotation.CompareTo(y.Rotation));
-                    return s;
+                    if (sortedSprites == null)
+                    {
+                        sortedSprites = sprites.Values.ToList();
+                        sortedSprites.Sort((x, y) => x.Rotation.CompareTo(y.Rotation));
+                    }
+                    return sortedSprites;
                 }
             }
+            List<Sprite> sortedSprites = null;
 
             public Rectangle Region
             {
@@ -781,6 +880,15 @@ namespace SpriteGenerator
                     throw new Exception("Frame mismatch.");
                 }
                 sprites.Add(sprite.Rotation, sprite);
+                sortedSprites = null; // We need to recalculate.
+            }
+
+            public int FindRotationIndex(string rotation)
+            {
+                int i = Sprites.FindIndex((x) => x.Rotation == rotation);
+                return i >= 0
+                    ? i
+                    : Sprites.FindIndex((x) => x.Rotation == (rotation == "0" ? "1" : "0"));
             }
         }
 
@@ -813,8 +921,15 @@ namespace SpriteGenerator
         {
             public List<string> States { get; set; }
 
-            public string ExportName { get; set; }
+            public string Rotations { get; set; }
 
+            /// <summary>
+            /// Whether to consider size and offset among all rotations or one rotation only.
+            /// </summary>
+            public bool OffsetAlignSharesAllRotations { get; set; }
+
+            public string ExportName { get; set; }
+            
             public class State
             {
                 public string Frame { get; private set; }
