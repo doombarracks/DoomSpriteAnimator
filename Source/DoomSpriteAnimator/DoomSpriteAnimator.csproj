@@ -55,8 +55,10 @@
     <Compile Include="AnimatedGif\OctreeQuantizer.cs" />
     <Compile Include="AnimatedGif\PaletteQuantizer.cs" />
     <Compile Include="AnimatedGif\Quantizer.cs" />
+    <Compile Include="ConsolePrint.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpriteAnimator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

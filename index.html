@@ -197,38 +197,22 @@
 			<p>All files are exported to <span>Example/Export_Doom/</span>.</p>
 			<table cellspacing="0">
 				<tr>
-					<td>Full/</td>
-					<td>"Full" means all PNGs in the folder "PngDirectory" are loaded and categorized by sprite name. ("BOSS", "CYBR", "SPID", etc.)</td>
-				</tr>
-				<tr>
-					<td>Full/SpriteSheet/</td>
-					<td>All sprite sheets.</td>
-				</tr>
-				<tr>
-					<td>Full/_DoomFullSpriteSheet.json</td>
-					<td>Contains information about every sprite from file name of the sprite sheet, size of each sprite, and frame name with rotation, which is useful if you want to make your own animation based on the sprite sheet exported.</td>
-				</tr>
-				<tr>
-					<td>ActorStates/</td>
-					<td>"ActorStates" means only PNGs in the folder "PngDirectory" referenced by "ActorStates" in definition JSON file will be loaded. (Not all files.)</td>
-				</tr>
-				<tr>
-					<td>ActorStates/SpriteSheet/</td>
+					<td>SpriteSheet/</td>
 					<td>All sprite sheets.</td>
 				</tr>
 				<tr>
 					<td>
-						ActorStates/SpriteSheet/_DoomAnimation.css<br>
-						ActorStates/SpriteSheet/_DoomAnimation.html
+						SpriteSheet/_DoomAnimation.css<br>
+						SpriteSheet/_DoomAnimation.html
 					</td>
 					<td>All animated sprites by CSS and an HTML to view the result.</td>
 				</tr>
 				<tr>
-					<td>ActorStates/_DoomFullSpriteSheet.json</td>
-					<td>Contains information about every sprite from file name of the sprite sheet, size of each sprite, and frame name <div style="display:inline-block;text-decoration:line-through">with rotation</div> (shouldn't be practical in this case), which is useful if you want to make your own animation based on the sprite sheet exported.</td>
+					<td>DoomFullSpriteSheet.json</td>
+					<td>Contains information about every sprite from file name of the sprite sheet, size of each sprite, and frame name with rotation, which is useful if you want to make your own animation based on the sprite sheet exported.</td>
 				</tr>
 				<tr>
-					<td>ActorStates/AnimatedGIF/</td>
+					<td>AnimatedGIF/</td>
 					<td>All animated GIFs.</td>
 				</tr>
 			</table>

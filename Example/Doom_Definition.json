@@ -1,580 +1,679 @@
 {
-  "PngDirectory": "Graphics\\Doom\\",
-  "ActorStates": {
-    "BSPI": {
-      "ExportName": "Arachnotron",
-      "States": [
-        "ABCDEFABCDEFABCDEFABCDEF 6",
-        "A 20",
-        "GHGHGHGHGHG 4",
-        "H 5"
-      ]
-    },
-    "VILE": {
-      "ExportName": "ArchVile",
-      "States": [
-        "ABCDEFABCDEFABCDEFABCDEF 4",
-        "G 10",
-        "HIJKLMNO 8",
-        "P 20",
-        "ABCDEFABCDEFABCDEFABCDEF 4",
-        "[]_ 10"
-      ]
-    },
-    "BOSS": {
-      "ExportName": "BaronOfHell",
-	  "Rotations": "218",
-	  "OffsetAlignSharesAllRotations": true,
-      "States": [
-        "ABCDABCDABCDABCDABCD 6",
-        "EFG 8"
-      ]
-    },
-    "BOS2": {
-      "ExportName": "HellKnight",
-      "States": [
-        "ABCDABCDABCDABCDABCD 6",
-        "EFG 8"
-      ]
-    },
-    "CYBR": {
-      "ExportName": "Cyberdemon",
-      "States": [
-        "ABCDABCDABCDABCDABCD 6",
-        "E 6",
-        "FEFEF 12"
-      ]
-    },
-    "HEAD": {
-      "ExportName": "Cacodemon",
-      "States": [
-        "A 60",
-        "E 6",
-        "BCD 5"
-      ]
-    },
-    "SARG": {
-      "ExportName": "Demon",
-      "States": [
-        "ABCDABCDABCDABCDABCDABCD 4",
-        "EFG 8"
-      ]
-    },
-    "TROO": {
-      "ExportName": "Imp",
-      "States": [
-        "ABCDABCDABCDABCDABCD 6",
-        "EF 8",
-        "G 6"
-      ]
-    },
-    "PLAY": {
-      "ExportName": "Player",
-      "States": [
-        "ABCDABCDABCDABCDABCDABCD 4",
-        "E 12",
-        "ABCDABCDABCDABCDABCDABCD 4",
-        "F 6",
-        "E 12"
-      ]
-    },
-    "FATT": {
-      "ExportName": "Mancubus",
-      "States": [
-        "ABCDEFABCDEFABCDEFABCDEF 8",
-        "G 20",
-        "H 10",
-        "IG 5",
-        "H 10",
-        "IG 5",
-        "H 10",
-        "IG 5"
-      ]
-    },
-    "SKUL": {
-      "ExportName": "LostSoul",
-      "States": [
-        "ABABABABABABABABABAB 6",
-        "C 10",
-        "DCDCDCDCDCDCDCDCDCDCD 4"
-      ]
-    },
-    "PAIN": {
-      "ExportName": "PainElemental",
-      "States": [
-        "ABCABCABCABCABCABC 6",
-        "DEF 5"
-      ]
-    },
-    "POSS": {
-      "ExportName": "Zombieman",
-      "States": [
-        "ABCDABCDABCDABCDABCD 8",
-        "E 10",
-        "FE 8"
-      ]
-    },
-    "SPOS": {
-      "ExportName": "ShotgunGuy",
-      "States": [
-        "ABCDABCDABCDABCDABCD 6",
-        "EFE 10"
-      ]
-    },
-    "CPOS": {
-      "ExportName": "ChaingunGuy",
-      "States": [
-        "ABCDABCDABCDABCDABCD 6",
-        "E 10",
-        "FEFEFEFEFE 4",
-        "F 1"
-      ]
-    },
-    "SSWV": {
-      "ExportName": "SSNazi",
-      "States": [
-        "ABCDABCDABCDABCDABCD 6",
-        "EF 10",
-        "G 4",
-        "F 6",
-        "G 5",
-        "F 10",
-        "G 4",
-        "F 6",
-        "G 5",
-        "F 10",
-        "G 4",
-        "F 6",
-        "G 4"
-      ]
-    },
-    "SKEL": {
-      "ExportName": "Revenant",
-      "States": [
-        "ABCDEFABCDEFABCDEFABCDEFABCDEF 4",
-        "GHI 6",
-        "ABCDEFABCDEFABCDEF 4",
-        "J 10",
-        "K 20"
-      ]
-    },
-    "SPID": {
-      "ExportName": "SpiderMastermind",
-      "States": [
-        "ABCDEFABCDEFABCDEFABCDEF 6",
-        "A 20",
-        "GHGHGHGHGHG 4",
-        "H 5"
-      ]
-    },
-    "BON2": {
-      "ExportName": "ArmorBonus",
-      "States": [
-        "ABCDCB 6"
-      ]
-    },
-    "ARM1": {
-      "ExportName": "GreenArmor",
-      "States": [
-        "A 6",
-		"B 7"
-      ]
-    },
-    "ARM2": {
-      "ExportName": "BlueArmor",
-      "States": [
-        "AB 6"
-      ]
-    },
-    "PINV": {
-      "ExportName": "InvulnerabilitySphere",
-      "States": [
-        "ABCD 6"
-      ]
-    },
-    "SOUL": {
-      "ExportName": "Soulsphere",
-      "States": [
-        "ABCDCB 6"
-      ]
-    },
-    "MEGA": {
-      "ExportName": "Megasphere",
-      "States": [
-        "ABCD 6"
-      ]
-    },
-    "PINS": {
-      "ExportName": "BlurSphere",
-      "States": [
-        "ABCD 6"
-      ]
-    },
-    "SUIT": {
-      "ExportName": "RadiationSuit",
-      "States": [
-        "A 35"
-      ]
-    },
-    "PVIS": {
-      "ExportName": "Infrared",
-      "States": [
-        "AB 6"
-      ]
-    },
-    "PMAP": {
-      "ExportName": "AllMap",
-      "States": [
-        "ABCDCB 6"
-      ]
-    },
-    "PSTR": {
-      "ExportName": "Berserk",
-      "States": [
-        "A 35"
-      ]
-    },
-    "TLMP": {
-      "ExportName": "TechLamp",
-      "States": [
-        "ABCD 4"
-      ]
-    },
-    "TLP2": {
-      "ExportName": "TechLamp2",
-      "States": [
-        "ABCD 4"
-      ]
-    },
-    "COLU": {
-      "ExportName": "Column",
-      "States": [
-        "A 35"
-      ]
-    },
-    "COL1": {
-      "ExportName": "TallGreenColumn",
-      "States": [
-        "A 35"
-      ]
-    },
-    "COL2": {
-      "ExportName": "ShortGreenColumn",
-      "States": [
-        "A 35"
-      ]
-    },
-    "COL3": {
-      "ExportName": "TallRedColumn",
-      "States": [
-        "A 35"
-      ]
-    },
-    "COL4": {
-      "ExportName": "ShortRedColumn",
-      "States": [
-        "A 35"
-      ]
-    },
-    "COL6": {
-      "ExportName": "SkullColumn",
-      "States": [
-        "A 35"
-      ]
-    },
-    "COL5": {
-      "ExportName": "HeartColumn",
-      "States": [
-        "AB 14"
-      ]
-    },
-    "CEYE": {
-      "ExportName": "EvilEye",
-      "States": [
-        "ABCB 6"
-      ]
-    },
-    "FSKU": {
-      "ExportName": "FloatingSkull",
-      "States": [
-        "ABC 6"
-      ]
-    },
-    "TRE1": {
-      "ExportName": "TorchTree",
-      "States": [
-        "A 35"
-      ]
-    },
-    "TBLU": {
-      "ExportName": "BlueTorch",
-      "States": [
-        "ABCD 4"
-      ]
-    },
-    "TGRN": {
-      "ExportName": "GreenTorch",
-      "States": [
-        "ABCD 4"
-      ]
-    },
-    "TRED": {
-      "ExportName": "RedTorch",
-      "States": [
-        "ABCD 4"
-      ]
-    },
-    "SMBT": {
-      "ExportName": "ShortBlueTorch",
-      "States": [
-        "ABCD 4"
-      ]
-    },
-    "SMGT": {
-      "ExportName": "ShortGreenTorch",
-      "States": [
-        "ABCD 4"
-      ]
-    },
-    "SMRT": {
-      "ExportName": "ShortRedTorch",
-      "States": [
-        "ABCD 4"
-      ]
-    },
-    "SMIT": {
-      "ExportName": "Stalagtite",
-      "States": [
-        "A 35"
-      ]
-    },
-    "ELEC": {
-      "ExportName": "TechPillar",
-      "States": [
-        "A 35"
-      ]
-    },
-    "CAND": {
-      "ExportName": "CandleStick",
-      "States": [
-        "A 35"
-      ]
-    },
-    "CBRA": {
-      "ExportName": "Candelabra",
-      "States": [
-        "A 35"
-      ]
-    },
-    "GOR1": {
-      "ExportName": "BloodyTwitch",
-      "States": [
-        "A 10",
-		"B 15",
-		"C 8",
-		"B 6"
-      ]
-    },
-    "GOR2": {
-      "ExportName": "Meat2",
-      "States": [
-        "A 35"
-      ]
-    },
-    "GOR3": {
-      "ExportName": "Meat3",
-      "States": [
-        "A 35"
-      ]
-    },
-    "GOR4": {
-      "ExportName": "Meat4",
-      "States": [
-        "A 35"
-      ]
-    },
-    "GOR5": {
-      "ExportName": "Meat5",
-      "States": [
-        "A 35"
-      ]
-    },
-    "POL4": {
-      "ExportName": "HeadOnAStick",
-      "States": [
-        "A 35"
-      ]
-    },
-    "POL2": {
-      "ExportName": "HeadsOnAStick",
-      "States": [
-        "A 35"
-      ]
-    },
-    "POL3": {
-      "ExportName": "HeadCandles",
-      "States": [
-        "AB 6"
-      ]
-    },
-    "POL1": {
-      "ExportName": "DeadStick",
-      "States": [
-        "A 35"
-      ]
-    },
-    "POL6": {
-      "ExportName": "LiveStick",
-      "States": [
-        "A 6",
-		"B 8"
-      ]
-    },
-    "TRE2": {
-      "ExportName": "BigTree",
-      "States": [
-        "A 35"
-      ]
-    },
-    "FCAN": {
-      "ExportName": "BurningBarrel",
-      "States": [
-        "ABC 4"
-      ]
-    },
-    "HDB1": {
-      "ExportName": "HangNoGuts",
-      "States": [
-        "A 35"
-      ]
-    },
-    "HDB2": {
-      "ExportName": "HangBNoBrain",
-      "States": [
-        "A 35"
-      ]
-    },
-    "HDB3": {
-      "ExportName": "HangTLookingDown",
-      "States": [
-        "A 35"
-      ]
-    },
-    "HDB5": {
-      "ExportName": "HangTLookingUp",
-      "States": [
-        "A 35"
-      ]
-    },
-    "HDB4": {
-      "ExportName": "HangTSkull",
-      "States": [
-        "A 35"
-      ]
-    },
-    "HDB6": {
-      "ExportName": "HangTNoBrain",
-      "States": [
-        "A 35"
-      ]
-    },
-    "POB1": {
-      "ExportName": "ColonGibs",
-      "States": [
-        "A 35"
-      ]
-    },
-    "POB2": {
-      "ExportName": "SmallBloodPool",
-      "States": [
-        "A 35"
-      ]
-    },
-    "BRS1": {
-      "ExportName": "BrainStem",
-      "States": [
-        "A 35"
-      ]
-    },
-    "SMT2": {
-      "ExportName": "Stalagmite",
-      "States": [
-        "A 35"
-      ]
-    },
-    "BON1": {
-      "ExportName": "HealthBonus",
-      "States": [
-        "ABCDCB 6"
-      ]
-    },
-    "STIM": {
-      "ExportName": "Stimpack",
-      "States": [
-        "A 35"
-      ]
-    },
-    "MEDI": {
-      "ExportName": "Medikit",
-      "States": [
-        "A 35"
-      ]
-    },
-    "BKEY": {
-      "ExportName": "BlueCard",
-      "States": [
-        "AB 10"
-      ]
-    },
-    "YKEY": {
-      "ExportName": "YellowCard",
-      "States": [
-        "AB 10"
-      ]
-    },
-    "RKEY": {
-      "ExportName": "RedCard",
-      "States": [
-        "AB 10"
-      ]
-    },
-    "BSKU": {
-      "ExportName": "BlueSkull",
-      "States": [
-        "AB 10"
-      ]
-    },
-    "YSKU": {
-      "ExportName": "YellowSkull",
-      "States": [
-        "AB 10"
-      ]
-    },
-    "RSKU": {
-      "ExportName": "RedSkull",
-      "States": [
-        "AB 10"
-      ]
-    },
-    "BAR1": {
-      "ExportName": "ExplosiveBarrel",
-      "States": [
-        "AB 6"
-      ]
-    },
-    "PUFF": {
-      "ExportName": "BulletPuff",
-      "States": [
-        "ABCD 4"
-      ]
-    }
-  },
-  "ExportBaseDirectory": "Export_Doom",
-  "ExportNamePrefix": "Doom_",
-  "ExportFullSpriteSheet": true,
-  "ExportFullSpriteSheetJSONPath": "_DoomFullSpriteSheet.json",
-  "ExportActorStatesSpriteSheet": true,
-  "ExportActorStatesSpriteSheetJSONPath": "_DoomActorStatesSpriteSheet.json",
-  "ExportActorStatesAnimatedGIF": true,
-  "ExportActorStatesAnimatedCSSPath": "_DoomAnimation.css"
+	"PngDirectory": "Graphics\\Doom\\",
+	"Actors": {
+		"Arachnotron": {
+			"States": [
+				"BSPI ABCDEFABCDEFABCDEFABCDEF 6",
+				"BSPI A 20",
+				"BSPI GHGHGHGHGHG 4",
+				"BSPI H 5"
+			]
+		},
+		"ArachnotronPlasma_Fly": {
+			"ReferencedActorRegionNames": [
+				"ArachnotronPlasma_Hit"
+			],
+			"States": [
+				"APLS AB 5"
+			]
+		},
+		"ArachnotronPlasma_Hit": {
+			"ReferencedActorRegionNames": [
+				"ArachnotronPlasma_Fly"
+			],
+			"States": [
+				"APBX ABCDE 5"
+			]
+		},
+		"Archvile": {
+			"States": [
+				"VILE ABCDEFABCDEFABCDEFABCDEF 4",
+				"VILE G 10",
+				"VILE HIJKLMNO 8",
+				"VILE P 20",
+				"VILE ABCDEFABCDEFABCDEFABCDEF 4",
+				"VILE []_ 10"
+			]
+		},
+		"ArchvileFire": {
+			"States": [
+				"FIRE ABABCBCBCDCDCDEDEDEFEFEFGHGHGH 2"
+			]
+		},
+		"BaronOfHell": {
+			"Rotations": "218",
+			"OffsetAlignSharesAllRotations": true,
+			"States": [
+				"BOSS ABCDABCDABCDABCDABCD 6",
+				"BOSS EFG 8"
+			]
+		},
+		"HellKnight": {
+			"States": [
+				"BOS2 ABCDABCDABCDABCDABCD 6",
+				"BOS2 EFG 8"
+			]
+		},
+		"BaronBall_Fly": {
+			"Rotations": "317",
+			"ReferencedActorRegionNames": [
+				"BaronBall_Hit"
+			],
+			"States": [
+				"BAL7 AB 4"
+			]
+		},
+		"BaronBall_Hit": {
+			"ReferencedActorRegionNames": [
+				"BaronBall_Fly"
+			],
+			"States": [
+				"BAL7 CDE 6"
+			]
+		},
+		"Cyberdemon": {
+			"States": [
+				"CYBR ABCDABCDABCDABCDABCD 6",
+				"CYBR E 6",
+				"CYBR FEFEF 12"
+			]
+		},
+		"Cacodemon": {
+			"States": [
+				"HEAD A 60",
+				"HEAD E 6",
+				"HEAD BCD 5"
+			]
+		},
+		"CacodemonBall_Fly": {
+			"ReferencedActorRegionNames": [
+				"CacodemonBall_Hit"
+			],
+			"States": [
+				"BAL2 AB 4"
+			]
+		},
+		"CacodemonBall_Hit": {
+			"ReferencedActorRegionNames": [
+				"CacodemonBall_Fly"
+			],
+			"States": [
+				"BAL2 CDE 6"
+			]
+		},
+		"Demon": {
+			"States": [
+				"SARG ABCDABCDABCDABCDABCDABCD 4",
+				"SARG EFG 8"
+			]
+		},
+		"Imp": {
+			"States": [
+				"TROO ABCDABCDABCDABCDABCD 6",
+				"TROO EF 8",
+				"TROO G 6"
+			]
+		},
+		"ImpBall_Fly": {
+			"ReferencedActorRegionNames": [
+				"ImpBall_Hit"
+			],
+			"States": [
+				"BAL1 AB 4"
+			]
+		},
+		"ImpBall_Hit": {
+			"ReferencedActorRegionNames": [
+				"ImpBall_Fly"
+			],
+			"States": [
+				"BAL1 CDE 6"
+			]
+		},
+		"Player": {
+			"States": [
+				"PLAY ABCDABCDABCDABCDABCDABCD 4",
+				"PLAY E 12",
+				"PLAY ABCDABCDABCDABCDABCDABCD 4",
+				"PLAY F 6",
+				"PLAY E 12"
+			]
+		},
+		"BFGBall_Fly": {
+			"ReferencedActorRegionNames": [
+				"BFGBall_Hit"
+			],
+			"States": [
+				"BFS1 AB 4"
+			]
+		},
+		"BFGBall_Hit": {
+			"ReferencedActorRegionNames": [
+				"BFGBall_Fly"
+			],
+			"States": [
+				"BFE1 ABCDEF 8"
+			]
+		},
+		"BFGExtra": {
+			"States": [
+				"BFE2 ABCD 8"
+			]
+		},
+		"PlasmaBall_Fly": {
+			"ReferencedActorRegionNames": [
+				"PlasmaBall_Hit"
+			],
+			"States": [
+				"PLSS AB 6"
+			]
+		},
+		"PlasmaBall_Hit": {
+			"ReferencedActorRegionNames": [
+				"PlasmaBall_Fly"
+			],
+			"States": [
+				"PLSE ABCDE 4"
+			]
+		},
+		"Rocket_Fly": {
+			"Rotations": "317",
+			"ReferencedActorRegionNames": [
+				"Rocket_Hit"
+			],
+			"States": [
+				"MISL A 35"
+			]
+		},
+		"Rocket_Hit": {
+			"ReferencedActorRegionNames": [
+				"Rocket_Fly"
+			],
+			"States": [
+				"MISL B 8",
+				"MISL C 6",
+				"MISL D 4"
+			]
+		},
+		"Mancubus": {
+			"States": [
+				"FATT ABCDEFABCDEFABCDEFABCDEF 8",
+				"FATT G 20",
+				"FATT H 10",
+				"FATT IG 5",
+				"FATT H 10",
+				"FATT IG 5",
+				"FATT H 10",
+				"FATT IG 5"
+			]
+		},
+		"MancubusBall_Fly": {
+			"Rotations": "317",
+			"ReferencedActorRegionNames": [
+				"MancubusBall_Hit"
+			],
+			"States": [
+				"MANF AB 4"
+			]
+		},
+		"MancubusBall_Hit": {
+			"ReferencedActorRegionNames": [
+				"MancubusBall_Fly"
+			],
+			"States": [
+				"MISL B 8",
+				"MISL C 6",
+				"MISL D 4"
+			]
+		},
+		"LostSoul": {
+			"States": [
+				"SKUL ABABABABABABABABABAB 6",
+				"SKUL C 10",
+				"SKUL DCDCDCDCDCDCDCDCDCDCD 4"
+			]
+		},
+		"LostSoul_Fly": {
+			"Rotations": "317",
+			"ReferencedActorRegionNames": [
+				"LostSoul_Death"
+			],
+			"States": [
+				"SKUL CD 4"
+			]
+		},
+		"LostSoul_Death": {
+			"ReferencedActorRegionNames": [
+				"LostSoul_Fly"
+			],
+			"States": [
+				"SKUL FGHIJK 6"
+			]
+		},
+		"PainElemental": {
+			"States": [
+				"PAIN ABCABCABCABCABCABC 6",
+				"PAIN DEF 5"
+			]
+		},
+		"Zombieman": {
+			"States": [
+				"POSS ABCDABCDABCDABCDABCD 8",
+				"POSS E 10",
+				"POSS FE 8"
+			]
+		},
+		"ShotgunGuy": {
+			"States": [
+				"SPOS ABCDABCDABCDABCDABCD 6",
+				"SPOS EFE 10"
+			]
+		},
+		"ChaingunGuy": {
+			"States": [
+				"CPOS ABCDABCDABCDABCDABCD 6",
+				"CPOS E 10",
+				"CPOS FEFEFEFEFE 4",
+				"CPOS F 1"
+			]
+		},
+		"SSNazi": {
+			"States": [
+				"SSWV ABCDABCDABCDABCDABCD 6",
+				"SSWV EF 10",
+				"SSWV G 4",
+				"SSWV F 6",
+				"SSWV G 5",
+				"SSWV F 10",
+				"SSWV G 4",
+				"SSWV F 6",
+				"SSWV G 5",
+				"SSWV F 10",
+				"SSWV G 4",
+				"SSWV F 6",
+				"SSWV G 4"
+			]
+		},
+		"Revenant": {
+			"States": [
+				"SKEL ABCDEFABCDEFABCDEFABCDEFABCDEF 4",
+				"SKEL GHI 6",
+				"SKEL ABCDEFABCDEFABCDEF 4",
+				"SKEL J 10",
+				"SKEL K 20"
+			]
+		},
+		"RevenantTracer_Fly": {
+			"Rotations": "317",
+			"ReferencedActorRegionNames": [
+				"RevenantTracer_Hit"
+			],
+			"States": [
+				"FATB AB 2"
+			]
+		},
+		"RevenantTracer_Hit": {
+			"ReferencedActorRegionNames": [
+				"RevenantTracer_Fly"
+			],
+			"States": [
+				"FBXP A 8",
+				"FBXP B 6",
+				"FBXP C 4"
+			]
+		},
+		"SpiderMastermind": {
+			"States": [
+				"SPID ABCDEFABCDEFABCDEFABCDEF 6",
+				"SPID A 20",
+				"SPID GHGHGHGHGHG 4",
+				"SPID H 5"
+			]
+		},
+		"ArmorBonus": {
+			"States": [
+				"BON2 ABCDCB 6"
+			]
+		},
+		"GreenArmor": {
+			"States": [
+				"ARM1 A 6",
+		"ARM1 B 7"
+			]
+		},
+		"BlueArmor": {
+			"States": [
+				"ARM2 AB 6"
+			]
+		},
+		"InvulnerabilitySphere": {
+			"States": [
+				"PINV ABCD 6"
+			]
+		},
+		"Soulsphere": {
+			"States": [
+				"SOUL ABCDCB 6"
+			]
+		},
+		"Megasphere": {
+			"States": [
+				"MEGA ABCD 6"
+			]
+		},
+		"Blursphere": {
+			"States": [
+				"PINS ABCD 6"
+			]
+		},
+		"RadiationSuit": {
+			"States": [
+				"SUIT A 35"
+			]
+		},
+		"Infrared": {
+			"States": [
+				"PVIS AB 6"
+			]
+		},
+		"AllMap": {
+			"States": [
+				"PMAP ABCDCB 6"
+			]
+		},
+		"Berserk": {
+			"States": [
+				"PSTR A 35"
+			]
+		},
+		"TLMP": {
+			"ExportName": "TechLamp",
+			"States": [
+				"ABCD 4"
+			]
+		},
+		"TechLamp2": {
+			"States": [
+				"TLP2 ABCD 4"
+			]
+		},
+		"Column": {
+			"States": [
+				"COLU A 35"
+			]
+		},
+		"COL1": {
+			"ExportName": "TallGreenColumn",
+			"States": [
+				"A 35"
+			]
+		},
+		"ShortGreenColumn": {
+			"States": [
+				"COL2 A 35"
+			]
+		},
+		"TallRedColumn": {
+			"States": [
+				"COL3 A 35"
+			]
+		},
+		"ShortRedColumn": {
+			"States": [
+				"COL4 A 35"
+			]
+		},
+		"COL6": {
+			"ExportName": "SkullColumn",
+			"States": [
+				"A 35"
+			]
+		},
+		"HeartColumn": {
+			"States": [
+				"COL5 AB 14"
+			]
+		},
+		"EvilEye": {
+			"States": [
+				"CEYE ABCB 6"
+			]
+		},
+		"FloatingSkull": {
+			"States": [
+				"FSKU ABC 6"
+			]
+		},
+		"TorchTree": {
+			"States": [
+				"TRE1 A 35"
+			]
+		},
+		"BlueTorch": {
+			"States": [
+				"TBLU ABCD 4"
+			]
+		},
+		"GreenTorch": {
+			"States": [
+				"TGRN ABCD 4"
+			]
+		},
+		"RedTorch": {
+			"States": [
+				"TRED ABCD 4"
+			]
+		},
+		"ShortBlueTorch": {
+			"States": [
+				"SMBT ABCD 4"
+			]
+		},
+		"ShortGreenTorch": {
+			"States": [
+				"SMGT ABCD 4"
+			]
+		},
+		"SMRT": {
+			"ExportName": "ShortRedTorch",
+			"States": [
+				"ABCD 4"
+			]
+		},
+		"Stalagtite": {
+			"States": [
+				"SMIT A 35"
+			]
+		},
+		"TechPillar": {
+			"States": [
+				"ELEC A 35"
+			]
+		},
+		"CandleStick": {
+			"States": [
+				"CAND A 35"
+			]
+		},
+		"Candelabra": {
+			"States": [
+				"CBRA A 35"
+			]
+		},
+		"BloodyTwitch": {
+			"States": [
+				"GOR1 A 10",
+		"GOR1 B 15",
+		"GOR1 C 8",
+		"GOR1 B 6"
+			]
+		},
+		"Meat2": {
+			"States": [
+				"GOR2 A 35"
+			]
+		},
+		"Meat3": {
+			"States": [
+				"GOR3 A 35"
+			]
+		},
+		"Meat4": {
+			"States": [
+				"GOR4 A 35"
+			]
+		},
+		"Meat5": {
+			"States": [
+				"GOR5 A 35"
+			]
+		},
+		"HeadOnAStick": {
+			"States": [
+				"POL4 A 35"
+			]
+		},
+		"HeadsOnAStick": {
+			"States": [
+				"POL2 A 35"
+			]
+		},
+		"HeadCandles": {
+			"States": [
+				"POL3 AB 6"
+			]
+		},
+		"DeadStick": {
+			"States": [
+				"POL1 A 35"
+			]
+		},
+		"LiveStick": {
+			"States": [
+				"POL6 A 6",
+		"POL6 B 8"
+			]
+		},
+		"BigTree": {
+			"States": [
+				"TRE2 A 35"
+			]
+		},
+		"BurningBarrel": {
+			"States": [
+				"FCAN ABC 4"
+			]
+		},
+		"HangNoGuts": {
+			"States": [
+				"HDB1 A 35"
+			]
+		},
+		"HangBNoBrain": {
+			"States": [
+				"HDB2 A 35"
+			]
+		},
+		"HangTLookingDown": {
+			"States": [
+				"HDB3 A 35"
+			]
+		},
+		"HangTLookingUp": {
+			"States": [
+				"HDB5 A 35"
+			]
+		},
+		"HangTSkull": {
+			"States": [
+				"HDB4 A 35"
+			]
+		},
+		"HangTNoBrain": {
+			"States": [
+				"HDB6 A 35"
+			]
+		},
+		"ColonGibs": {
+			"States": [
+				"POB1 A 35"
+			]
+		},
+		"SmallBloodPool": {
+			"States": [
+				"POB2 A 35"
+			]
+		},
+		"BrainStem": {
+			"States": [
+				"BRS1 A 35"
+			]
+		},
+		"Stalagmite": {
+			"States": [
+				"SMT2 A 35"
+			]
+		},
+		"HealthBonus": {
+			"States": [
+				"BON1 ABCDCB 6"
+			]
+		},
+		"Stimpack": {
+			"States": [
+				"STIM A 35"
+			]
+		},
+		"Medikit": {
+			"States": [
+				"MEDI A 35"
+			]
+		},
+		"BlueCard": {
+			"States": [
+				"BKEY AB 10"
+			]
+		},
+		"YellowCard": {
+			"States": [
+				"YKEY AB 10"
+			]
+		},
+		"RedCard": {
+			"States": [
+				"RKEY AB 10"
+			]
+		},
+		"BlueSkull": {
+			"States": [
+				"BSKU AB 10"
+			]
+		},
+		"YellowSkull": {
+			"States": [
+				"YSKU AB 10"
+			]
+		},
+		"RedSkull": {
+			"States": [
+				"RSKU AB 10"
+			]
+		},
+		"ExplosiveBarrel": {
+			"States": [
+				"BAR1 AB 6"
+			]
+		},
+		"BulletPuff": {
+			"States": [
+				"PUFF ABCD 4"
+			]
+		}
+	},
+	"ExportBaseDirectory": "Export_Doom",
+	"ExportNamePrefix": "Doom_",
+	"ExportSpriteSheet": true,
+	"ExportSpriteSheetJSONFileName": "DoomSpriteSheet.json",
+	"ExportCSSAnimationFileName": "_DoomAnimation.css",
+	"ExportAnimatedGIF": true
 }
