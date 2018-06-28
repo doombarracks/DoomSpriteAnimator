@@ -22,7 +22,8 @@
 				"ArachnotronPlasma_Fly"
 			],
 			"States": [
-				"APBX ABCDE 5"
+				"APBX ABCDE 5",
+				"TNT1 A -1"
 			]
 		},
 		"Archvile": {
@@ -37,7 +38,8 @@
 		},
 		"ArchvileFire": {
 			"States": [
-				"FIRE ABABCBCBCDCDCDEDEDEFEFEFGHGHGH 2"
+				"FIRE ABABCBCBCDCDCDEDEDEFEFEFGHGHGH 2",
+				"TNT1 A -1"
 			]
 		},
 		"BaronOfHell": {
@@ -68,7 +70,8 @@
 				"BaronBall_Fly"
 			],
 			"States": [
-				"BAL7 CDE 6"
+				"BAL7 CDE 6",
+				"TNT1 A -1"
 			]
 		},
 		"Cyberdemon": {
@@ -98,7 +101,8 @@
 				"CacodemonBall_Fly"
 			],
 			"States": [
-				"BAL2 CDE 6"
+				"BAL2 CDE 6",
+				"TNT1 A -1"
 			]
 		},
 		"Demon": {
@@ -127,7 +131,8 @@
 				"ImpBall_Fly"
 			],
 			"States": [
-				"BAL1 CDE 6"
+				"BAL1 CDE 6",
+				"TNT1 A -1"
 			]
 		},
 		"Player": {
@@ -152,12 +157,14 @@
 				"BFGBall_Fly"
 			],
 			"States": [
-				"BFE1 ABCDEF 8"
+				"BFE1 ABCDEF 8",
+				"TNT1 A -1"
 			]
 		},
 		"BFGExtra": {
 			"States": [
-				"BFE2 ABCD 8"
+				"BFE2 ABCD 8",
+				"TNT1 A -1"
 			]
 		},
 		"PlasmaBall_Fly": {
@@ -173,7 +180,8 @@
 				"PlasmaBall_Fly"
 			],
 			"States": [
-				"PLSE ABCDE 4"
+				"PLSE ABCDE 4",
+				"TNT1 A -1"
 			]
 		},
 		"Rocket_Fly": {
@@ -192,7 +200,8 @@
 			"States": [
 				"MISL B 8",
 				"MISL C 6",
-				"MISL D 4"
+				"MISL D 4",
+				"TNT1 A -1"
 			]
 		},
 		"Mancubus": {
@@ -223,7 +232,8 @@
 			"States": [
 				"MISL B 8",
 				"MISL C 6",
-				"MISL D 4"
+				"MISL D 4",
+				"TNT1 A -1"
 			]
 		},
 		"LostSoul": {
@@ -247,7 +257,8 @@
 				"LostSoul_Fly"
 			],
 			"States": [
-				"SKUL FGHIJK 6"
+				"SKUL FGHIJK 6",
+				"TNT1 A -1"
 			]
 		},
 		"PainElemental": {
@@ -319,7 +330,8 @@
 			"States": [
 				"FBXP A 8",
 				"FBXP B 6",
-				"FBXP C 4"
+				"FBXP C 4",
+				"TNT1 A -1"
 			]
 		},
 		"SpiderMastermind": {
@@ -503,9 +515,9 @@
 		"BloodyTwitch": {
 			"States": [
 				"GOR1 A 10",
-		"GOR1 B 15",
-		"GOR1 C 8",
-		"GOR1 B 6"
+				"GOR1 B 15",
+				"GOR1 C 8",
+				"GOR1 B 6"
 			]
 		},
 		"Meat2": {
