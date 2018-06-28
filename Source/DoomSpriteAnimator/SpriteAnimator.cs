@@ -1280,7 +1280,7 @@ namespace DoomSpriteAnimator
                         : (a.RegionAmongAllRotations ? ss.Region : ss.ExtractRotation(r).Region);
 
                     // Construct GIF image.
-                    AnimatedGifCreator gif = AnimatedGif.AnimatedGif.Create(MergePath(baseDirectory, imgName + ".gif"), 1000 / 35, animateOnce ? 1 : 0);
+                    AnimatedGifCreator gif = AnimatedGif.AnimatedGif.Create(MergePath(baseDirectory, imgName + ".gif"), 1000 / 35, animateOnce ? null : (byte?)(0));
                     Dictionary<Sprite, Bitmap> processedSprites = new Dictionary<Sprite, Bitmap>();
 
                     foreach (State state in a.States)

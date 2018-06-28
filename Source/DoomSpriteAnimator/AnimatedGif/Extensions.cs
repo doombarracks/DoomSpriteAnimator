@@ -2,14 +2,21 @@
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace AnimatedGif {
-    public static class Extensions {
-        public static void SaveGif(this Image img, Stream stream, GifQuality quality) {
-            if (quality == GifQuality.Default) {
+namespace AnimatedGif
+{
+    public static class Extensions
+    {
+        public static void SaveGif(this Image img, Stream stream, GifQuality quality)
+        {
+            if (quality == GifQuality.Default)
+            {
                 img.Save(stream, ImageFormat.Gif);
-            } else {
+            }
+            else
+            {
                 Quantizer quantizer;
-                switch (quality) {
+                switch (quality)
+                {
                     case GifQuality.Grayscale:
                         quantizer = new GrayscaleQuantizer();
                         break;
@@ -23,13 +30,15 @@ namespace AnimatedGif {
                         break;
                 }
 
-                using (var quantized = quantizer.Quantize(img)) {
+                using (var quantized = quantizer.Quantize(img))
+                {
                     quantized.Save(stream, ImageFormat.Gif);
                 }
             }
         }
 
-        public static void Write(this FileStream stream, byte[] array) {
+        public static void Write(this FileStream stream, byte[] array)
+        {
             stream.Write(array, 0, array.Length);
         }
     }

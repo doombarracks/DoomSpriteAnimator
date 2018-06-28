@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
 
-namespace AnimatedGif {
-    public static class AnimatedGif {
+namespace AnimatedGif
+{
+    public static class AnimatedGif
+    {
         /// <summary>
         ///     Create a new Animated GIF
         /// </summary>
         /// <param name="filePath">The Path where the Animated GIF gets saved</param>
         /// <param name="delay">Delay between frames</param>
-        /// <param name="repeat">GIF Repeat count (0 meaning forever)</param>
+        /// <param name="repeat">GIF Repeat count (null meaning forever)</param>
         /// <returns></returns>
-        public static AnimatedGifCreator Create(string filePath, int delay, int repeat = 0) {
+        public static AnimatedGifCreator Create(string filePath, int delay, byte? repeat = 0)
+        {
             return new AnimatedGifCreator(filePath, delay, repeat);
         }
 
@@ -19,7 +22,8 @@ namespace AnimatedGif {
         /// </summary>
         /// <param name="filePath">Path to GIF File</param>
         /// <returns>GifBitmapDecoder using the GIF File</returns>
-        public static GifBitmapDecoder Load(string filePath) {
+        public static GifBitmapDecoder Load(string filePath)
+        {
             return new GifBitmapDecoder(new Uri(filePath), BitmapCreateOptions.DelayCreation,
                 BitmapCacheOption.Default);
         }
