@@ -11,9 +11,6 @@ using System.Web.Script.Serialization;
 
 namespace DoomSpriteAnimator
 {
-    /*
-     * 現在 SpriteSheetJSON 會無法得知 ReferenceActorRegion!
-     */
     public static class SpriteAnimator
     {
         /// <summary>
@@ -26,31 +23,40 @@ namespace DoomSpriteAnimator
             /// </summary>
             public Rectangle Region { get; private set; } = Rectangle.Empty;
 
-            bool _first = true;
-
+            /// <summary>
+            /// Merges two regions together.
+            /// If one of the region has no size, the other one will be returned.
+            /// If all regions has no size, Rectangle.Empty will be returned.
+            /// </summary>
+            /// <param name="a">First region to be merged.</param>
+            /// <param name="b">Second region to be merged.</param>
+            /// <returns>Merged region.</returns>
             public static Rectangle Merge(Rectangle a, Rectangle b)
-                => Rectangle.Union(a, b);
+            {
+                bool xa = a.Width == 0 || a.Height == 0,
+                    xb = b.Width == 0 || b.Height == 0;
+                return !xa && !xb
+                    ? Rectangle.Union(a, b)
+                    : (xa && xb ? Rectangle.Empty : (xa ? b : a));
+            }
 
             /// <summary>
             /// Merges another region.
             /// </summary>
             /// <param name="region">Region to be merged.</param>
             public void MergeWith(Rectangle region)
-            {
-                if (_first)
-                {
-                    Region = region;
-                    _first = false;
-                }
-                else
-                {
-                    Region = Merge(Region, region);
-                }
-            }
+                => Region = Merge(Region, region);
         }
 
         class Sprite
         {
+            /// <summary>
+            /// Gets invisible sprite.
+            /// Originally introduced by TeamTNT in Boom, TNT1 frame A is an invisible sprite. Even if graphics are provided (for example, a TNT1A0 lump), it will remain invisible. For actors needing to be invisible, use TNT1.
+            /// (https://zdoom.org/wiki/sprite)
+            /// </summary>
+            public static readonly Sprite InvisibleSprite = new Sprite("TNT1", 'A', '0', null, 0, 0);
+
             /// <summary>
             /// Gets four-alphabet name of sprite.
             /// </summary>
@@ -91,20 +97,25 @@ namespace DoomSpriteAnimator
             /// </summary>
             public Rectangle Region { get; private set; }
 
+            /// <summary>
+            /// Gets whether this sprite is invisible or not.
+            /// </summary>
+            public bool IsInvisible => FullFrameName == InvisibleSprite.FullFrameName;
+
             public Sprite(string name, char frame, char rotation, Image image, int offsetX, int offsetY)
             {
                 if (name == null || name.Length != 4)
                 {
                     throw new ArgumentException("Sprite's \"Name\" field should be 4 alphabets in length.");
                 }
-                Image = image ?? throw new ArgumentNullException("Sprite image cannot be null.");
+                Image = image; // If image is null, it is represented an empty image and region will always be ignored due to it's size is zero.
 
                 Name = name.ToUpper();
                 Frame = char.ToUpper(frame);
                 Rotation = char.ToUpper(rotation);
 
                 Offset = new Point(offsetX, offsetY);
-                Region = new Rectangle(-offsetX, -offsetY, image.Width, image.Height);
+                Region = new Rectangle(-offsetX, -offsetY, image != null ? image.Width : 0, image != null ? image.Height : 0);
             }
 
             /// <summary>
@@ -114,8 +125,16 @@ namespace DoomSpriteAnimator
             /// <returns>New sprite after mirroring.</returns>
             public Sprite GetMirror(char frame, char rotation)
             {
-                Image img = (Image)Image.Clone();
-                img.RotateFlip(RotateFlipType.Rotate180FlipY);
+                Image img;
+                if (Image != null)
+                {
+                    img = (Image)Image.Clone();
+                    img.RotateFlip(RotateFlipType.Rotate180FlipY);
+                }
+                else
+                {
+                    img = null;
+                }
                 return new Sprite(Name, frame, rotation, img, img.Width - Offset.X, Offset.Y);
             }
 
@@ -126,7 +145,13 @@ namespace DoomSpriteAnimator
             /// <param name="origin">Left-top corner to draw this sprite.</param>
             /// <param name="region">Region area for this sprite to align offset. (Usually be the maximum offset and sprite size so all sprites can fit.)</param>
             public void Draw(Graphics g, Point origin, Rectangle region)
-                => g.DrawImage(Image, new Rectangle(origin.X + (Region.X - region.X), origin.Y + (Region.Y - region.Y), Image.Width, Image.Height));
+            {
+                // If there is no image, we simply skip it.
+                if (Image != null)
+                {
+                    g.DrawImage(Image, new Rectangle(origin.X + (Region.X - region.X), origin.Y + (Region.Y - region.Y), Image.Width, Image.Height));
+                }
+            }
 
             public override string ToString()
                 => "Sprite: " + FullSpriteName;
@@ -320,6 +345,13 @@ namespace DoomSpriteAnimator
             public Sprite[] GetSprite(string fullFrameName)
             {
                 fullFrameName = fullFrameName.ToUpper();
+
+                // Special case for the invisible sprite.
+                if (fullFrameName == Sprite.InvisibleSprite.FullFrameName)
+                {
+                    return new Sprite[] { Sprite.InvisibleSprite };
+                }
+
                 IList<Sprite> list = Sprites;
                 return list.Where(x => x.FullFrameName == fullFrameName).ToArray();
             }
@@ -334,9 +366,17 @@ namespace DoomSpriteAnimator
             /// If no sprite is found, null will be returned.
             /// </returns>
             public Sprite GetSprite(string fullFrameName, char rotation)
-                => _pool.TryGetValue(fullFrameName + char.ToUpper(rotation), out Sprite s)
+            {
+                // Special case for the invisible sprite.
+                if (fullFrameName.Equals(Sprite.InvisibleSprite.FullFrameName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return Sprite.InvisibleSprite;
+                }
+
+                return _pool.TryGetValue(fullFrameName + char.ToUpper(rotation), out Sprite s)
                     ? s
                     : (_pool.TryGetValue(fullFrameName + char.ToUpper(rotation == '0' ? '1' : '0'), out s) ? s : null);
+            }
 
             /// <summary>
             /// Adds a sprite to the pool.
@@ -347,7 +387,11 @@ namespace DoomSpriteAnimator
             {
                 if (_pool.ContainsKey(sprite.FullSpriteName))
                 {
-                    _pool[sprite.FullSpriteName] = sprite;
+                    // For the invisible sprite, it cannot be overwritten.
+                    if (sprite.FullFrameName != Sprite.InvisibleSprite.FullFrameName)
+                    {
+                        _pool[sprite.FullSpriteName] = sprite;
+                    }
                 }
                 else
                 {
@@ -435,6 +479,32 @@ namespace DoomSpriteAnimator
             /// Gets whether we defined reference actors for drawing regions.
             /// </summary>
             public bool HasReferencedActorRegion => ReferencedActorRegionNames != null && ReferencedActorRegionNames.Length > 0;
+
+            /// <summary>
+            /// Gets whether there is a state with negative duration.
+            /// </summary>
+            public bool HasNegativeDurationState => States.FirstOrDefault(x => x.Duration < 0) != null;
+
+            /// <summary>
+            /// Gets the sum of duration of all states.
+            /// If a state with negative number is presented, sum of duration will be stopped adding and returning the value.
+            /// </summary>
+            public int TotalDuration
+            {
+                get
+                {
+                    int duration = 0;
+                    foreach (State s in States)
+                    {
+                        if (s.Duration < 0)
+                        {
+                            break;
+                        }
+                        duration += s.Duration;
+                    }
+                    return duration;
+                }
+            }
 
             /// <summary>
             /// Constructs an actor by JSON.
@@ -1121,12 +1191,9 @@ namespace DoomSpriteAnimator
             foreach (Actor a in actors)
             {
                 string imgBaseName = namePrefix + a.Name;
-
-                // Total amount of duration.
-                double totalDuration = a.States.Sum(x => x.Duration);
-
-                // Get sprite sheet and region.
-                SpriteSheet ss = SpriteSheet.FromActorAndSpritePool(a, spritePool);
+                double totalDuration = a.TotalDuration; // Total amount of duration for timing.
+                bool animateOnce = a.HasNegativeDurationState; // If we only need to animate once instead of looping forever.
+                SpriteSheet ss = SpriteSheet.FromActorAndSpritePool(a, spritePool); // Get sprite sheet for finding the location of sprites.
                 Rectangle region = a.HasReferencedActorRegion // Not a beautiful implementation, but it takes too much modifications to make it work simpler.
                     ? ss.GetRegionWithActors(actors, spritePool, a.ReferencedActorRegionNames)
                     : ss.Region;
@@ -1141,7 +1208,7 @@ namespace DoomSpriteAnimator
                         .AppendFormat("\twidth: {0}px;", region.Width).AppendLine()
                         .AppendFormat("\theight: {0}px;", region.Height).AppendLine()
                         .AppendFormat("\tbackground: url('{0}.png');", imgBaseName).AppendLine()
-                        .AppendFormat("\tanimation: {0} {1:0.000}s step-end infinite;", kfName, totalDuration / 35.0).AppendLine()
+                        .AppendFormat("\tanimation: {0} {1:0.000}s step-end {2};", kfName, totalDuration / 35.0, animateOnce ? "1" : "infinite").AppendLine()
                         .AppendLine("}");
 
                     // Generate key frames.
@@ -1149,8 +1216,8 @@ namespace DoomSpriteAnimator
                     int duration = 0;
                     foreach (State s in a.States)
                     {
-                        // Skip zero duration.
-                        if (s.Duration <= 0)
+                        // Skip zero duration state.
+                        if (s.Duration == 0)
                         {
                             continue;
                         }
@@ -1164,6 +1231,13 @@ namespace DoomSpriteAnimator
 
                         css.AppendFormat("\t{0:0.00}% {{ background-position: {1}px {2}px }}",
                             duration / totalDuration * 100.0, -find.ColumnIndex * region.Width, -find.RowIndex * region.Height).AppendLine();
+
+                        // Negative duration state should consider the end.
+                        if (s.Duration < 0)
+                        {
+                            break;
+                        }
+
                         duration += s.Duration;
                     }
                     css.AppendLine("}").AppendLine();
@@ -1196,9 +1270,8 @@ namespace DoomSpriteAnimator
             foreach (Actor a in actors)
             {
                 string imgBaseName = namePrefix + a.Name;
-
-                // Get sprite sheet.
-                SpriteSheet ss = SpriteSheet.FromActorAndSpritePool(a, spritePool);
+                bool animateOnce = a.HasNegativeDurationState; // If we only need to animate once instead of looping forever.
+                SpriteSheet ss = SpriteSheet.FromActorAndSpritePool(a, spritePool); // Get sprite sheet for region.
                 foreach (char r in a.Rotations)
                 {
                     string imgName = GetNameWithRotation(imgBaseName, r);
@@ -1207,12 +1280,13 @@ namespace DoomSpriteAnimator
                         : (a.RegionAmongAllRotations ? ss.Region : ss.ExtractRotation(r).Region);
 
                     // Construct GIF image.
-                    AnimatedGifCreator gif = AnimatedGif.AnimatedGif.Create(MergePath(baseDirectory, imgName + ".gif"), 1000 / 35);
+                    AnimatedGifCreator gif = AnimatedGif.AnimatedGif.Create(MergePath(baseDirectory, imgName + ".gif"), 1000 / 35, animateOnce ? 1 : 0);
                     Dictionary<Sprite, Bitmap> processedSprites = new Dictionary<Sprite, Bitmap>();
 
                     foreach (State state in a.States)
                     {
-                        if (state.Duration <= 0)
+                        // Skip zero duration state.
+                        if (state.Duration == 0)
                         {
                             continue;
                         }
@@ -1234,7 +1308,15 @@ namespace DoomSpriteAnimator
                             processedSprites.Add(sprite, gifFrame);
                         }
 
-                        gif.AddFrame(gifFrame, (int)Math.Round(state.Duration * 1000.0 / 35.0), GifQuality.Bit8);
+                        gif.AddFrame(gifFrame,
+                            state.Duration > 0 ? Math.Max(1, (int)Math.Round(state.Duration * 1000.0 / 35.0)) : 65535,
+                            GifQuality.Bit8);
+
+                        // Negative duration state should consider the end.
+                        if (state.Duration < 0)
+                        {
+                            break;
+                        }
                     }
 
                     gif.Dispose();
