@@ -1208,7 +1208,7 @@ namespace DoomSpriteAnimator
                         .AppendFormat("\twidth: {0}px;", region.Width).AppendLine()
                         .AppendFormat("\theight: {0}px;", region.Height).AppendLine()
                         .AppendFormat("\tbackground: url('{0}.png');", imgBaseName).AppendLine()
-                        .AppendFormat("\tanimation: {0} {1:0.000}s step-end {2};", kfName, totalDuration / 35.0, animateOnce ? "1" : "infinite").AppendLine()
+                        .AppendFormat("\tanimation: {0} {1:0.000}s step-end {2};", kfName, totalDuration / 35.0, animateOnce ? "1 forwards" : "infinite").AppendLine()
                         .AppendLine("}");
 
                     // Generate key frames.
