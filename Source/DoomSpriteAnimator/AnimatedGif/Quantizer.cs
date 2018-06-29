@@ -44,23 +44,31 @@ namespace AnimatedGif
             int width = source.Width;
 
             // And construct a rectangle from these dimensions
-            var bounds = new Rectangle(0, 0, width, height);
+            Rectangle bounds = new Rectangle(0, 0, width, height);
 
             // First off take a 32bpp copy of the image
-            var copy = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+            Bitmap copy;
+            if (source.PixelFormat == PixelFormat.Format32bppArgb && source is Bitmap)
+            {
+                copy = (Bitmap)source;
+            }
+            else
+            {
+                copy = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+
+                // Now lock the bitmap into memory
+                using (var g = Graphics.FromImage(copy))
+                {
+                    g.PageUnit = GraphicsUnit.Pixel;
+
+                    // Draw the source image onto the copy bitmap,
+                    // which will effect a widening as appropriate.
+                    g.DrawImage(source, bounds);
+                }
+            }
 
             // And construct an 8bpp version
-            var output = new Bitmap(width, height, PixelFormat.Format8bppIndexed);
-
-            // Now lock the bitmap into memory
-            using (var g = Graphics.FromImage(copy))
-            {
-                g.PageUnit = GraphicsUnit.Pixel;
-
-                // Draw the source image onto the copy bitmap,
-                // which will effect a widening as appropriate.
-                g.DrawImage(source, bounds);
-            }
+            Bitmap output = new Bitmap(width, height, PixelFormat.Format8bppIndexed);
 
             // Define a pointer to the bitmap data
             BitmapData sourceData = null;

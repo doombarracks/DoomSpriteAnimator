@@ -326,10 +326,15 @@ namespace AnimatedGif
                     else
                     {
                         // Go to the next level down in the tree
+                        /*
                         int shift = 7 - level;
                         int index = ((pixel.Red & Mask[level]) >> (shift - 2)) |
                                     ((pixel.Green & Mask[level]) >> (shift - 1)) |
                                     ((pixel.Blue & Mask[level]) >> shift);
+                        */
+
+                        int value = pixel.ARGB >> (7 - level);
+                        int index = (value & 1) | ((value >> 7) & 2) | ((value >> 14) & 4);
 
                         var child = Children[index];
 
@@ -406,10 +411,15 @@ namespace AnimatedGif
 
                     if (!_leaf)
                     {
+                        /*
                         int shift = 7 - level;
                         int index = ((pixel.Red & Mask[level]) >> (shift - 2)) |
                                     ((pixel.Green & Mask[level]) >> (shift - 1)) |
                                     ((pixel.Blue & Mask[level]) >> shift);
+                        */
+
+                        int value = pixel.ARGB >> (7 - level);
+                        int index = (value & 1) | ((value >> 7) & 2) | ((value >> 14) & 4);
 
                         if (null != Children[index])
                             paletteIndex = Children[index].GetPaletteIndex(pixel, level + 1);

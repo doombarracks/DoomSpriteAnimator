@@ -96,10 +96,10 @@ namespace AnimatedGif
             {
                 int pixel = ScreenDescriptor[4] & 0x07;
 
-                int lengthOfColorTableInByte = 3 * (int)Math.Pow(2, pixel + 1);
+                int lengthOfColorTableInByte = 3 * (1 << (pixel + 1));
 
                 for (int i = 0; i < lengthOfColorTableInByte; i++) ColorTable.Add(gifData[i]);
-
+                
                 gifData.RemoveRange(0, lengthOfColorTableInByte);
             }
 
@@ -127,7 +127,7 @@ namespace AnimatedGif
             {
                 int pixel = ImageDescriptor[9] & 0x07;
 
-                int lengthOfColorTableInByte = 3 * (int)Math.Pow(2, pixel + 1);
+                int lengthOfColorTableInByte = 3 * (1 << (pixel + 1));
 
                 ColorTable.Clear();
 

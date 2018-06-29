@@ -26,7 +26,7 @@ namespace DoomSpriteAnimator
             /// <summary>
             /// Merges two regions together.
             /// If one of the region has no size, the other one will be returned.
-            /// If all regions has no size, Rectangle.Empty will be returned.
+            /// If all regions have no size, Rectangle.Empty will be returned.
             /// </summary>
             /// <param name="a">First region to be merged.</param>
             /// <param name="b">Second region to be merged.</param>
@@ -41,7 +41,7 @@ namespace DoomSpriteAnimator
             }
 
             /// <summary>
-            /// Merges another region.
+            /// Merges with another region.
             /// </summary>
             /// <param name="region">Region to be merged.</param>
             public void MergeWith(Rectangle region)
